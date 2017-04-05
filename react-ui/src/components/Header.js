@@ -6,9 +6,8 @@ class Header extends Component {
   render() {
     const style = {
       AppHeader: {
-
         backgroundColor: "#336221",
-        height: 100,
+        height: 80,
         color: "white",
         overflow: "hidden",
         display: 'flex',
@@ -23,7 +22,7 @@ class Header extends Component {
         alignSelf: 'center',
         width: '100%',
         position: 'absolute',
-        top: 20,
+        top: 15,
         left: 0
       }
     }

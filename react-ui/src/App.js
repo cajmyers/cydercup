@@ -42,22 +42,22 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div className="App container">
-          <div className="row">
-            <Header />
+        <div className="App">
+          <Header />
+          <div className="container">
+            <p className="App-intro">
+              {'This is '}
+              <a href="https://github.com/cajmyers/cydercup">
+                {'create-react-app with a custom Node/Express server'}
+              </a><br/>
+            </p>
+            <RaisedButton label="Default" />
+            <p className="App-intro">
+              {this.state.fetching
+                ? 'Fetching message from API'
+                : this.state.message}
+            </p>
           </div>
-          <p className="App-intro">
-            {'This is '}
-            <a href="https://github.com/cajmyers/cydercup">
-              {'create-react-app with a custom Node/Express server'}
-            </a><br/>
-          </p>
-          <RaisedButton label="Default" />
-          <p className="App-intro">
-            {this.state.fetching
-              ? 'Fetching message from API'
-              : this.state.message}
-          </p>
         </div>
       </MuiThemeProvider>
     );
