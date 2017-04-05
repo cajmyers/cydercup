@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+var pg = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -9,8 +10,18 @@ app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
 // Answer API requests.
 app.get('/api', function (req, res) {
-  res.set('Content-Type', 'application/json');
-  res.send('{"message":"Hello from the custom server!"}');
+  console.log("process.env.DATABASE_URL: ", process.env.DATABASE_URL);
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    console.log(err)
+    res.set('Content-Type', 'application/json');
+    client.query('SELECT * FROM players', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); res.send("Error " + err); }
+      else
+       { res.send({results: result.rows} ); }
+    });
+  });
 });
 
 // All remaining requests return the React app, so it can handle routing.

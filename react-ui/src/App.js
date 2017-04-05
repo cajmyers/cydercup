@@ -20,8 +20,9 @@ class App extends Component {
         return response.json();
       })
       .then(json => {
+        console.log(json);
         this.setState({
-          message: json.message,
+          message: "Hi " + json.results[0].name,
           fetching: false
         });
       }).catch(e => {
