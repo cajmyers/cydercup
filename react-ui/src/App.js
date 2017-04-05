@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './stylesheets/App.css';
+import './stylesheets/skeleton/skeleton.css';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import Header from './components/Header';
+
+injectTapEventPlugin();
 
 class App extends Component {
   constructor(props) {
@@ -35,23 +41,25 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <MuiThemeProvider>
+        <div className="App container">
+          <div className="row">
+            <Header />
+          </div>
+          <p className="App-intro">
+            {'This is '}
+            <a href="https://github.com/cajmyers/cydercup">
+              {'create-react-app with a custom Node/Express server'}
+            </a><br/>
+          </p>
+          <RaisedButton label="Default" />
+          <p className="App-intro">
+            {this.state.fetching
+              ? 'Fetching message from API'
+              : this.state.message}
+          </p>
         </div>
-        <p className="App-intro">
-          {'This is '}
-          <a href="https://github.com/cajmyers/cydercup">
-            {'create-react-app with a custom Node/Express server'}
-          </a><br/>
-        </p>
-        <p className="App-intro">
-          {this.state.fetching
-            ? 'Fetching message from API'
-            : this.state.message}
-        </p>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
