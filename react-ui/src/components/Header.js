@@ -19,6 +19,8 @@ class Header extends Component {
         alignSelf: 'center'
       },
       title: {
+        fontFamily: 'Roboto',
+        fontWeight: 500,
         alignSelf: 'center',
         width: '100%',
         position: 'absolute',
@@ -30,7 +32,7 @@ class Header extends Component {
     return (
       <div style={style.AppHeader}>
         <img style={style.image} src={require('../images/cyder_cup_banner.jpg')} alt="None" />   
-        <h3 style={style.title}>Cyder Cup 2017</h3>
+        <h3 style={style.title}>S C O R E</h3>
       </div>
     )
   };
