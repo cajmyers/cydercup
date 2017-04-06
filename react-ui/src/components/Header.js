@@ -1,38 +1,48 @@
 import React, { Component } from 'react';
-import '../stylesheets/App.css';
-import '../stylesheets/skeleton/skeleton.css';
+import Paper from 'material-ui/Paper'
+import FlatButton from 'material-ui/FlatButton';
+import Menu from 'material-ui/svg-icons/navigation/menu'
 
 class Header extends Component {
   render() {
     const style = {
-      AppHeader: {
-        backgroundColor: "#336221",
-        height: 80,
-        color: "white",
-        overflow: "hidden",
-        display: 'flex',
-        justifyContent: 'center'
+      container: {
+        position: 'absolute',
+        width: '100%',
+        maxWidth: 960,
+        zIndex: 99,
+        top: 0,
+        left: 0,
+        textAlign: 'right'
       },
       image: {
-        display: 'block',
-        width: '100%',
-        alignSelf: 'center'
+        height: 100,
+        float: 'left',
+        marginLeft: 10,
+        marginTop: 5
       },
-      title: {
+      banner: {
+        height: 58,
+      },
+      bannerText: {
         fontFamily: 'Roboto',
-        fontWeight: 500,
-        alignSelf: 'center',
-        width: '100%',
-        position: 'absolute',
-        top: 15,
-        left: 0
+        fontWeight: 500
+      },
+      menu: {
+        margin: 10
       }
     }
 
     return (
-      <div style={style.AppHeader}>
-        <img style={style.image} src={require('../images/cyder_cup_banner.jpg')} alt="None" />   
-        <h3 style={style.title}>S C O R E</h3>
+      <div style={style.container}>
+        <Paper style={style.banner} zDepth={2} rounded={false}>
+          <img style={style.image} src={require('../images/cydercup_logo.png')} alt="None" />   
+          <span style={style.bannerText}>Menu</span>
+          <FlatButton
+            icon={<Menu/>}
+            style={style.menu}
+          />
+        </Paper>   
       </div>
     )
   };

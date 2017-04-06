@@ -5,6 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Header from './components/Header';
+import Title from './components/Title';
 
 injectTapEventPlugin();
 
@@ -40,23 +41,30 @@ class App extends Component {
   }
 
   render() {
+    const style = {
+      app: {
+        textAlign: 'center',
+        maxWidth: 960
+      },
+      inner: {
+        fontFamily: 'Roboto',
+        marginTop: 52
+      }
+    }
     return (
       <MuiThemeProvider>
-        <div className="App">
+        <div style={style.app}>
           <Header />
-          <div className="container">
-            <p className="App-intro">
-              {'This is '}
-              <a href="https://github.com/cajmyers/cydercup">
-                {'create-react-app with a custom Node/Express server'}
-              </a><br/>
-            </p>
-            <RaisedButton label="Default" />
-            <p className="App-intro">
-              {this.state.fetching
-                ? 'Fetching message from API'
-                : this.state.message}
-            </p>
+          <div style={style.inner}>
+            <Title />
+            <div className="container">
+              <RaisedButton label="Default" />
+              <p className="App-intro">
+                {this.state.fetching
+                  ? 'Fetching message from API'
+                  : this.state.message}
+              </p>
+            </div>
           </div>
         </div>
       </MuiThemeProvider>
