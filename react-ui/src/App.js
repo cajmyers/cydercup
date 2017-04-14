@@ -1,43 +1,21 @@
 import React, { Component } from 'react';
+import {Provider} from 'react-redux'
 import './stylesheets/App.css';
 import './stylesheets/skeleton/skeleton.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import Header from './components/Header';
-import Title from './components/Title';
+import PageScoreContainer from './components/containers/PageScoreContainer';
+import PageTeamsContainer from './components/containers/PageTeamsContainer';
+import HeaderContainer from './components/containers/HeaderContainer';
+import {connect} from 'react-redux'
+import {fetchPlayersIfNeeded} from './model/actions/actions'
+
 
 injectTapEventPlugin();
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: null,
-      fetching: true
-    };
-  }
-
   componentDidMount() {
-    fetch('/api')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`status ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(json => {
-        console.log(json);
-        this.setState({
-          message: "Hi " + json.results[0].name,
-          fetching: false
-        });
-      }).catch(e => {
-        this.setState({
-          message: `API call failed: ${e}`,
-          fetching: false
-        });
-      })
+    this.props.dispatch(fetchPlayersIfNeeded());
   }
 
   render() {
@@ -51,25 +29,43 @@ class App extends Component {
         marginTop: 52
       }
     }
+    console.log("App store: ", this.props.store.getState())
+    console.log("App props: ", this.props)
+    var page = null;
+    switch(this.props.pageId) {
+      case 'teams': {
+        page = <PageTeamsContainer />;
+        break;
+      }
+      case 'score': {
+        page = <PageScoreContainer />;
+        break;
+      }
+      default: {
+        page = <PageScoreContainer />;
+      }
+    }
     return (
-      <MuiThemeProvider>
-        <div style={style.app}>
-          <Header />
-          <div style={style.inner}>
-            <Title />
-            <div className="container">
-              <RaisedButton label="Default" />
-              <p className="App-intro">
-                {this.state.fetching
-                  ? 'Fetching message from API'
-                  : this.state.message}
-              </p>
+      <Provider store={this.props.store}>
+        <MuiThemeProvider>
+          <div style={style.app}>
+            <HeaderContainer />
+            <div style={style.inner}>
+              {page}
             </div>
           </div>
-        </div>
-      </MuiThemeProvider>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state/*, props*/) => {
+    return {
+        pageId: state.actionReducer.pageId
+    }
+}
+
+const ConnectedApp = connect(mapStateToProps)(App)
+export default ConnectedApp
+

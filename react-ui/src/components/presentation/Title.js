@@ -23,15 +23,15 @@ class Title extends Component {
         alignSelf: 'center',
         width: '100%',
         position: 'absolute',
-        top: 15,
+        top: '25%',
         left: 0
       }
     }
 
     return (
       <div style={style.container}>
-        <img style={style.image} src={require('../images/banner2.jpg')} alt="None" />   
-        <h3 style={style.title}>S C O R E</h3>
+        <img style={style.image} src={this.props.banner} alt="None" />   
+        <h3 style={style.title}>{this.props.text}</h3>
       </div>
     )
   };
