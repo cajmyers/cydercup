@@ -5,7 +5,7 @@ class Title extends Component {
     const style = {
       container: {
         position: 'relative',
-        backgroundColor: "#336221",
+        backgroundColor: this.props.backgroundColor,
         height: 70,
         color: "white",
         overflow: "hidden",

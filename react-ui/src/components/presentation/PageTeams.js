@@ -10,6 +10,7 @@ class PageTeams extends Component {
         return (
             <div>
                 <Title 
+                    backgroundColor="#cc4f19"
                     banner={require('../../images/banner_teams.jpg')}
                     text="T E A M S"
                 />
