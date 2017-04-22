@@ -4,6 +4,8 @@ import './stylesheets/App.css';
 import './stylesheets/skeleton/skeleton.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import myBaseTheme from './themes/myBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import PageScoreContainer from './components/containers/PageScoreContainer';
 import PageTeamsContainer from './components/containers/PageTeamsContainer';
 import HeaderContainer from './components/containers/HeaderContainer';
@@ -47,7 +49,7 @@ class App extends Component {
     }
     return (
       <Provider store={this.props.store}>
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={getMuiTheme(myBaseTheme)}>
           <div style={style.app}>
             <HeaderContainer />
             <div style={style.inner}>

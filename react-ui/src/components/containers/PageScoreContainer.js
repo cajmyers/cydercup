@@ -10,8 +10,8 @@ class PageScoreContainer extends Component {
      <PageScore 
        message="Howdy"
        totalPoints={18}
-       mudhutters={5.5}
-       clydes={6.5}
+       mudhutters={4.5}
+       clydes={3.5}
       />
     )
   };

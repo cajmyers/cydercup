@@ -1,8 +1,9 @@
  // 
 // PageScore.js
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import Title from './Title'
+import MatchTabs from './MatchTabs'
+import Paper from 'material-ui/Paper'
 
 function createTableBlocks(totalPoints, mudhutters, clydes, style) {
         var scoreBlocks = [];
@@ -52,8 +53,8 @@ class PageScore extends Component {
                 borderBottomColor: "darkblue",
            },
            value: {
-                fontSize: 38,
-                fontWeight: 900,
+                fontSize: 30,
+                fontWeight: 500,
                 color: "white",
            }
         }
@@ -69,7 +70,6 @@ class PageScore extends Component {
                 width: "100%",
                 height: 50,
                 margin: "0 auto",
-                marginTop: 5,
             },
             scoreRow: {
                 display: "table-row",
@@ -100,6 +100,7 @@ class PageScore extends Component {
                 ...base.scoreCell,
                 ...base.scoreClydes,
                 borderLeft: "1px solid blue",
+                borderRight: "1px solid #0248f5",
             },
             scoreText: {
                 marginTop: 5,
@@ -133,7 +134,9 @@ class PageScore extends Component {
             scoreArea: {
                 position: "relative",
                 width: "100%",
-                height: 60,
+                height: 50,
+                marginTop: 5,
+                marginBottom: 15,
             },
             scoreAreaOverlay: {
                 position: "absolute",
@@ -158,10 +161,6 @@ class PageScore extends Component {
                 float: "right",
                 marginRight: 15,
             },
-            image: {
-                width: 10,
-                height: 60,
-            }
         }
 
         var scoreBlocks = createTableBlocks(this.props.totalPoints*2, this.props.mudhutters*2, this.props.clydes*2, style);
@@ -177,7 +176,7 @@ class PageScore extends Component {
                     <span style={style.win}>{(this.props.totalPoints/2)+0.5} to win</span>
                     <div style={style.clydeTitle}>Clydebank</div>
                 </div>
-                <div style={style.scoreArea}>
+                <Paper style={style.scoreArea} zDepth={3}>
                     <div style={style.scoreAreaOverlayTop}>
                         <div style={style.scoreValueMudhutters}>{this.props.mudhutters}</div>
                         <div style={style.scoreValueClydes}>{this.props.clydes}</div>
@@ -189,13 +188,8 @@ class PageScore extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="container">
-                    <RaisedButton label="Default" />
-                    <p className="App-intro">
-                        {this.props.message}
-                    </p>
-                </div>
+                </Paper>
+                <MatchTabs />
             </div>
         )
     };
