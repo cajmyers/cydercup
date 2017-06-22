@@ -2,9 +2,9 @@
 // MatchTabs.js
 import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-// From https://github.com/oliviertassinari/react-swipeable-views
 import SwipeableViews from 'react-swipeable-views';
 import FourBalls from './FourBalls'
+import Singles from './Singles'
 
 class MatchTabs extends Component {
     constructor(props) {
@@ -28,11 +28,11 @@ class MatchTabs extends Component {
                 fontWeight: 400,
             },
             content: {
-                backgroundColor: "#ebebeb",
+                backgroundColor: "#dfdfdf",
             },
         }
 
-        console.log("MatchTabs props: ", this.props)
+        console.log("MatchTabs props: ", this.props);
         return (
             <div>
                 <Tabs
@@ -51,7 +51,7 @@ class MatchTabs extends Component {
                         <FourBalls/>
                     </div>
                     <div>
-                        slide n°2
+                        <Singles/>
                     </div>
                 </SwipeableViews>
             </div>
