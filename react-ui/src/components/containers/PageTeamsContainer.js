@@ -8,14 +8,8 @@ import {connect} from 'react-redux'
 class PageTeamsContainer extends Component {
     render () {
         console.log("PageTeamsContainer props: ", this.props)
-        var players = [];
-        if (this.props.players) {
-            this.props.players.forEach(function(player, i) {
-                players.push(<span key={i}>{player.name}</span>);
-            })
-        }
         return (
-            <PageTeams players={players}/>
+            <PageTeams />
         )
     };
 }
@@ -23,7 +17,6 @@ class PageTeamsContainer extends Component {
 const mapStateToProps = (state/*, props*/) => {
     return {
         players: state.actionReducer.players,
-        state: state
     }
 }
 

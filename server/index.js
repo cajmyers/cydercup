@@ -10,6 +10,7 @@ app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
 // Answer API requests.
 app.get('/api', function (req, res) {
+  console.log(process.env.DATABASE_URL);
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     res.set('Content-Type', 'application/json');
     client.query('SELECT * FROM players', function(err, result) {
