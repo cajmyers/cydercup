@@ -1,9 +1,11 @@
- // 
+//
 // Match.js
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import PlayedIcon from 'material-ui/svg-icons/image/brightness-1';
+import NotPlayedIcon from 'material-ui/svg-icons/content/block';
 
 class Match extends Component {
-    render () {
+    render() {
         const style = {
             container: {
                 marginTop: 10,
@@ -17,7 +19,7 @@ class Match extends Component {
                 height: 75,
             },
             clydes: {
-                backgroundColor: "blue",                
+                backgroundColor: "blue",
                 color: "blue",
                 height: 75,
             },
@@ -77,13 +79,16 @@ class Match extends Component {
                 width: 16,
                 height: 16,
             },
+            nameContainerSingle: {
+                marginTop: 20,
+            }
         }
 
-        var scoreBlocks = []
-        var mudhutter = <img style={style.hole} src={require('../../images/hole_mudhutter.png')} alt="hole"/>
-        var clyde = <img style={style.hole} src={require('../../images/hole_clyde.png')} alt="hole"/>
-        var half = <img style={style.hole} src={require('../../images/hole_half.png')} alt="hole"/>
-        var none = <img style={style.hole} src={require('../../images/hole_none.png')} alt="hole"/>
+        var scoreBlocks = [];
+        var mudhutter = <PlayedIcon style={style.hole} color="red"/>;
+        var clyde = <PlayedIcon style={style.hole} color="blue"/>;
+        var half = <PlayedIcon style={style.hole} color="#aaaaaa"/>;
+        var none = <NotPlayedIcon style={style.hole} color="#aaaaaa"/>;
         var up = 0;
         for (var i = 0; i < 18; i++) {
             var icon = none
@@ -112,6 +117,28 @@ class Match extends Component {
         if (up === 0) {
             up = "All Square"
         }
+        var mudhutter2 = null;
+        var nameStyle = style.nameContainerSingle;
+        if (this.props.mudhutter2) {
+            nameStyle = null;
+            mudhutter2 = (
+                <div>
+                    <div style={style.small}>{this.props.mudhutter2.firstName}</div>
+                    <div style={style.surname}>{this.props.mudhutter2.surname}</div>
+                </div>
+            );
+        }
+        var clyde2 = null;
+        if (this.props.clyde2) {
+            nameStyle = null;
+            clyde2 = (
+                <div>
+                    <div style={style.small}>{this.props.clyde2.firstName}</div>
+                    <div style={style.surname}>{this.props.clyde2.surname}</div>
+                </div>
+            );
+        }
+
 
         console.log("Match props: ", this.props)
         return (
@@ -119,10 +146,11 @@ class Match extends Component {
                 <div className="row">
                     <div className="one column" style={style.mudhutters}>.</div>
                     <div className="three columns" style={style.mudhutterNames}>
-                        <div style={style.small}>{this.props.mudhutter1.firstName}</div> 
-                        <div style={style.surname}>{this.props.mudhutter1.surname}</div>                            
-                        <div style={style.small}>{this.props.mudhutter2.firstName}</div> 
-                        <div style={style.surname}>{this.props.mudhutter2.surname}</div>
+                        <div style={nameStyle}>
+                            <div style={style.small}>{this.props.mudhutter1.firstName}</div>
+                            <div style={style.surname}>{this.props.mudhutter1.surname}</div>
+                        </div>
+                        {mudhutter2}
                     </div>
                     <div className="four columns" style={style.small}>
                         <div style={style.title}>Match {this.props.match}</div>
@@ -132,12 +160,13 @@ class Match extends Component {
                         </div>
                     </div>
                     <div className="three columns" style={style.clydeNames}>
-                        <div style={style.small}>{this.props.clyde1.firstName}</div> 
-                        <div style={style.surname}>{this.props.clyde1.surname}</div>                            
-                        <div style={style.small}>{this.props.clyde2.firstName}</div> 
-                        <div style={style.surname}>{this.props.clyde2.surname}</div>
+                        <div style={nameStyle}>
+                            <div style={style.small}>{this.props.clyde1.firstName}</div>
+                            <div style={style.surname}>{this.props.clyde1.surname}</div>
+                        </div>
+                        {clyde2}
                     </div>
-                    <div className="one column" style={style.clydes}>.</div>                    
+                    <div className="one column" style={style.clydes}>.</div>
                 </div>
                 <div style={style.scoreTable}>
                     <div style={style.scoreRow}>
@@ -147,6 +176,6 @@ class Match extends Component {
             </div>
         )
     };
-}       
+}
 
 export default Match;
