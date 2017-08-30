@@ -16,7 +16,6 @@ class PageTeamsContainer extends Component {
 
 const mapStateToProps = (state/*, props*/) => {
     return {
-        players: state.actionReducer.players,
     }
 }
 

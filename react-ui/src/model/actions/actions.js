@@ -1,5 +1,6 @@
 //
 // actions.js
+import {MOCK} from '../../settings';
 
 export const SET_PAGE = 'SET_PAGE'
 export function setPage(pageId) {
@@ -18,7 +19,7 @@ function requestPlayers() {
 
 export const RECEIVE_PLAYERS = 'RECEIVE_PLAYERS'
 function receivePlayers(json) {
-    console.log("receivePlayers json: ", json)
+    console.log("receivePlayers json: ", JSON.stringify(json));
     return {
         type: RECEIVE_PLAYERS,
         players: json.results,
@@ -27,13 +28,21 @@ function receivePlayers(json) {
 }
 
 function fetchPlayers() {
-    var url = "/api";
-    console.log(url);
-    return function (dispatch) {
-        dispatch(requestPlayers())
-        return fetch(url)
-        .then(response => response.json())
-        .then(json => dispatch(receivePlayers(json)))
+    if (MOCK) {
+        var json = require('../../assets/players.json')
+        return function (dispatch) {
+            dispatch(receivePlayers(json));
+        }
+    }
+    else {
+        var url = "/api";
+        console.log(url);
+        return function (dispatch) {
+            dispatch(requestPlayers())
+            return fetch(url)
+            .then(response => response.json())
+            .then(json => dispatch(receivePlayers(json)))
+        }
     }
 }
 
