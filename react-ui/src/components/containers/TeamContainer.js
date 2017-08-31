@@ -4,9 +4,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import TeamPlayerName from '../presentation/TeamPlayerName';
+import TeamContent from '../presentation/TeamContent';
 
 
 class TeamContainer extends Component {
@@ -36,10 +34,6 @@ class TeamContainer extends Component {
             content: {
                 backgroundColor: "white",
             },
-            tabContentContainer: {
-                width: "100%",
-                position: "relative",
-            },
             mudhutterTab: {
                 color: "white",
                 fontSize: 20,
@@ -56,42 +50,16 @@ class TeamContainer extends Component {
                 backgroundColor: "lightgrey",
                 height: 50,
             },
-            h1: {
-                fontFamily: "Roboto",
-                fontSize: 22,
-                fontWeight: 500,
-                marginTop: 15,
-                display: "inline-block",
-            },
-            addButton: {
-                position: "absolute",
-                right: 10,
-                top: 8,
-            }
-        }
+        };
+
         let mudhutters = [];
         let clydebanks = [];
         if (this.props.players) {
-            this.props.players.forEach(function(player, i) {
+            this.props.players.forEach(function(player) {
                 if (player.team === "mudhutters") {
-                    mudhutters.push(
-                        <div key={i}>
-                            <TeamPlayerName 
-                                name={player.name}
-                                surname={player.surname}
-                            />
-                        </div>
-                    );
+                    mudhutters.push(player);
                 } else {
-                    clydebanks.push(
-                        <div key={i}>
-                            <TeamPlayerName 
-                                name={player.name}
-                                surname={player.surname}
-                                onDelete={() => {this.deletePlayer(player.id)}}
-                            />
-                        </div>
-                    );
+                    clydebanks.push(player);
                 }
             })
         }
@@ -118,28 +86,8 @@ class TeamContainer extends Component {
                     onChangeIndex={this.handleChange}
                     style={style.content}
                     >
-                    <div style={style.tabContentContainer}>
-                        <h1 style={style.h1}>
-                            Players
-                        </h1>
-                        <FloatingActionButton mini={true} style={style.addButton} backgroundColor="DarkSeaGreen">
-                            <ContentAdd />
-                        </FloatingActionButton>
-                        <div>
-                            {mudhutters}
-                        </div>
-                    </div>
-                    <div style={style.tabContentContainer}>
-                        <h1 style={style.h1}>
-                            Players
-                        </h1>
-                        <FloatingActionButton mini={true} style={style.addButton} backgroundColor="DarkSeaGreen">
-                            <ContentAdd />
-                        </FloatingActionButton>
-                        <div>
-                            {clydebanks}
-                        </div>
-                    </div>
+                    <TeamContent players={mudhutters} team="mudhutters"/>
+                    <TeamContent players={clydebanks} team="clydebank"/>
                 </SwipeableViews>
             </div>
         )

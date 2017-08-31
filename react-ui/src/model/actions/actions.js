@@ -2,7 +2,7 @@
 // actions.js
 import {MOCK} from '../../settings';
 
-export const SET_PAGE = 'SET_PAGE'
+export const SET_PAGE = 'SET_PAGE';
 export function setPage(pageId) {
     return {
         type: SET_PAGE,
@@ -10,14 +10,14 @@ export function setPage(pageId) {
     }
 }
 
-export const REQUEST_PLAYERS = 'REQUEST_PLAYERS'
+export const REQUEST_PLAYERS = 'REQUEST_PLAYERS';
 function requestPlayers() {
     return {
         type: REQUEST_PLAYERS
     }
 }
 
-export const RECEIVE_PLAYERS = 'RECEIVE_PLAYERS'
+export const RECEIVE_PLAYERS = 'RECEIVE_PLAYERS';
 function receivePlayers(json) {
     console.log("receivePlayers json: ", JSON.stringify(json));
     return {
@@ -27,9 +27,20 @@ function receivePlayers(json) {
     }
 }
 
+export const SET_MATCH_PLAYERS = "SET_MATCH_PLAYERS";
+export function setMatchPlayer(matchNumber, team, player1Id, player2Id) {
+    return {
+        type: SET_MATCH_PLAYERS,
+        matchNumber: matchNumber,
+        team: team,
+        player1Id: player1Id,
+        player2Id: player2Id
+    }
+}
+
 function fetchPlayers() {
     if (MOCK) {
-        var json = require('../../assets/players.json')
+        var json = require('../../assets/players.json');
         return function (dispatch) {
             dispatch(receivePlayers(json));
         }
@@ -47,7 +58,7 @@ function fetchPlayers() {
 }
 
 function shouldFetchPlayers(state) {
-    const players = state.actionReducer['players']
+    const players = state.actionReducer['players'];
 
     if (!players) {
         return true
