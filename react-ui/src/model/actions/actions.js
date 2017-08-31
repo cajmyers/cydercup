@@ -38,6 +38,16 @@ export function setMatchPlayer(matchNumber, team, player1Id, player2Id) {
     }
 }
 
+export const SET_SINGLES_ORDER = "SET_SINGLES_ORDER";
+export function setSinglesOrder(team, playerId, order) {
+    return {
+        type: SET_SINGLES_ORDER,
+        team: team,
+        playerId: playerId,
+        order: order,
+    }
+}
+
 function fetchPlayers() {
     if (MOCK) {
         var json = require('../../assets/players.json');
