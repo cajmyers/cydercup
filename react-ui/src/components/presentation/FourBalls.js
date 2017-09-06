@@ -1,6 +1,7 @@
  // 
 // FourBalls.js
 import React, { Component } from 'react';
+import MatchContainer from '../containers/MatchContainer';
 import Match from './Match'
 
 class FourBalls extends Component {
@@ -8,13 +9,8 @@ class FourBalls extends Component {
         console.log("FourBalls props: ", this.props)
         return (
             <div>
-                <Match
+                <MatchContainer
                     match={1}
-                    mudhutter1={{firstName: "Jon", surname: "Winstanley"}}
-                    mudhutter2={{firstName: "Greg", surname: "McDonald"}}
-                    clyde1={{firstName: "Raymond", surname: "Murray"}}
-                    clyde2={{firstName: "David", surname: "Annand"}}
-                    holes={[3, 2, 3, 1, 1, 3, 1, 2, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0]}
                 />
                 <Match
                     match={2}
