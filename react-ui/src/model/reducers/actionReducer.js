@@ -31,9 +31,6 @@ export default function actionReducer(state = {}, action) {
                     newList[key] = state.singlesOrder[key];
                 }
             }
-            if (!newList[singlesKey]) {
-                newList[singlesKey] = {};
-            }
             newList[singlesKey] = action.playerId;
             return {
                 ...state,

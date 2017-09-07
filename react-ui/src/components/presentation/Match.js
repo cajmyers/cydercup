@@ -1,8 +1,10 @@
 //
 // Match.js
 import React, {Component} from 'react';
+import FlatButton from 'material-ui/FlatButton';
 import PlayedIcon from 'material-ui/svg-icons/image/brightness-1';
 import NotPlayedIcon from 'material-ui/svg-icons/content/block';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 class Match extends Component {
     render() {
@@ -117,8 +119,10 @@ class Match extends Component {
         if (up === 0) {
             up = "All Square"
         }
-        var mudhutter2 = null;
+
         var nameStyle = style.nameContainerSingle;
+
+        var mudhutter2 = null;
         if (this.props.mudhutter2) {
             nameStyle = null;
             mudhutter2 = (
@@ -139,6 +143,25 @@ class Match extends Component {
             );
         }
 
+        var mudhutter1 = null;
+        if (this.props.mudhutter1) {
+            mudhutter1 = (
+                <div style={nameStyle}>
+                    <div style={style.small}>{this.props.mudhutter1.firstName}</div>
+                    <div style={style.surname}>{this.props.mudhutter1.surname}</div>
+                </div>
+            );
+        }
+        var clyde1 = null;
+        if (this.props.clyde1) {
+            clyde1 = (
+                <div style={nameStyle}>
+                    <div style={style.small}>{this.props.clyde1.firstName}</div>
+                    <div style={style.surname}>{this.props.clyde1.surname}</div>
+                </div>
+            );
+        }
+
 
         console.log("Match props: ", this.props)
         return (
@@ -146,24 +169,23 @@ class Match extends Component {
                 <div className="row">
                     <div className="one column" style={style.mudhutters}>.</div>
                     <div className="three columns" style={style.mudhutterNames}>
-                        <div style={nameStyle}>
-                            <div style={style.small}>{this.props.mudhutter1.firstName}</div>
-                            <div style={style.surname}>{this.props.mudhutter1.surname}</div>
-                        </div>
+                        {mudhutter1}
                         {mudhutter2}
                     </div>
                     <div className="four columns" style={style.small}>
-                        <div style={style.title}>Match {this.props.match}</div>
+                        <FlatButton
+                            label={"Match " + this.props.match}
+                            labelPosition="before"
+                            primary={true}
+                            icon={<EditIcon/>}
+                        />
                         <div style={scoreStyle}>
                             <div style={style.scoreValue}>{up}</div>
                             <div style={style.scoreText}>up</div>
                         </div>
                     </div>
                     <div className="three columns" style={style.clydeNames}>
-                        <div style={nameStyle}>
-                            <div style={style.small}>{this.props.clyde1.firstName}</div>
-                            <div style={style.surname}>{this.props.clyde1.surname}</div>
-                        </div>
+                        {clyde1}
                         {clyde2}
                     </div>
                     <div className="one column" style={style.clydes}>.</div>
