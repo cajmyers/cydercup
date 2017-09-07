@@ -11,13 +11,12 @@ class TeamSingle extends Component {
         const style = {
             container: {
                 width: "100%",
-                textAlign: "left",
+                textAlign: "center",
             },
             label: {
                 display: "inline-block",
                 fontFamily: "Roboto",
                 fontSize: 16,
-                width: "30%",
                 textAlign: "right",
                 paddingRight: 10,
                 paddingTop: 10,
@@ -25,14 +24,14 @@ class TeamSingle extends Component {
             },
             selector: {
                 display: "inline-block",
-                width: "60%",
+                width: "80%",
             },
         };
 
         return (
             <div style={style.container}>
                 <div style={style.label}>
-                    Player {this.props.orderNumber}:
+                    {this.props.orderNumber}:
                 </div>
                 <div style={style.selector}>
                     <SelectField
