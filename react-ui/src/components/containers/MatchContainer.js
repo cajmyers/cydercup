@@ -8,6 +8,10 @@ import {connect} from 'react-redux'
 class MatchContainer extends Component {
     render() {
         console.log("MatchContainer props: ", this.props);
+
+        if (this.props.matchList && this.props.matchList[this.props.match]) {
+
+        }
         return (
             <Match
                 match={this.props.match}
@@ -22,7 +26,9 @@ class MatchContainer extends Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
-    return {}
+    return {
+        matchList: state.actionReducer.matchList,
+    }
 };
 
 const ConnectedMatchContainer = connect(mapStateToProps)(MatchContainer);
