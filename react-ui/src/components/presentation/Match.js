@@ -2,9 +2,8 @@
 // Match.js
 import React, {Component} from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import PlayedIcon from 'material-ui/svg-icons/image/brightness-1';
-import NotPlayedIcon from 'material-ui/svg-icons/content/block';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import ScoreTableContainer from '../containers/ScoreTableContainer';
 
 class Match extends Component {
     render() {
@@ -18,12 +17,12 @@ class Match extends Component {
             mudhutters: {
                 backgroundColor: "red",
                 color: "red",
-                height: 75,
+                height: 80,
             },
             clydes: {
                 backgroundColor: "blue",
                 color: "blue",
-                height: 75,
+                height: 80,
             },
             mudhutterNames: {
                 textAlign: "left",
@@ -41,9 +40,10 @@ class Match extends Component {
             },
             title: {
                 marginTop: 5,
+                height: 16,
             },
             scoreBlock: {
-                marginTop: -5,
+                color: "#aaaaaa",
             },
             scoreBlockUp: {
                 marginTop: -5,
@@ -60,64 +60,36 @@ class Match extends Component {
             },
             scoreValue: {
                 display: "inline-block",
-                fontSize: 40,
+                fontSize: 32,
                 fontWeight: 900,
-            },
-            scoreTable: {
-                display: "table",
-                boxSizing: "border-box",
-                width: "100%",
-                height: 30,
-                margin: "0 auto",
-            },
-            scoreRow: {
-                display: "table-row",
-            },
-            scoreCell: {
-                display: "table-cell",
-            },
-            hole: {
-                marginTop: 8,
-                width: 16,
-                height: 16,
             },
             nameContainerSingle: {
                 marginTop: 20,
             }
-        }
+        };
 
-        var scoreBlocks = [];
-        var mudhutter = <PlayedIcon style={style.hole} color="red"/>;
-        var clyde = <PlayedIcon style={style.hole} color="blue"/>;
-        var half = <PlayedIcon style={style.hole} color="#aaaaaa"/>;
-        var none = <NotPlayedIcon style={style.hole} color="#aaaaaa"/>;
-        var up = 0;
-        for (var i = 0; i < 18; i++) {
-            var icon = none
-            if (this.props.holes[i] === 1) {
-                icon = mudhutter;
-                up++;
-            } else if (this.props.holes[i] === 2) {
-                icon = clyde;
-                up--;
-            } else if (this.props.holes[i] === 3) {
-                icon = half;
-            }
-            scoreBlocks.push(
-                <div key={i} style={style.scoreCell}>
-                    {icon}
+        var score = null;
+        if (this.props.up > 0) {
+            score = (
+                <div style={style.scoreBlockUp}>
+                    <div style={style.scoreValue}>{Math.abs(this.props.up)}</div>
+                    <div style={style.scoreText}>up</div>
                 </div>
-            )
+            );
+        } else if (this.props.up < 0) {
+            score = (
+                <div style={style.scoreBlockDown}>
+                    <div style={style.scoreValue}>{Math.abs(this.props.up)}</div>
+                    <div style={style.scoreText}>up</div>
+                </div>
+            );
         }
-        var scoreStyle = style.scoreBlock;
-        if (up > 0) {
-            scoreStyle = style.scoreBlockUp;
-        } else if (up < 0) {
-            scoreStyle = style.scoreBlockDown;
-        }
-        up = Math.abs(up);
-        if (up === 0) {
-            up = "All Square"
+        else  {
+            score = (
+                <div style={style.scoreBlock}>
+                    <div style={style.scoreText}>All Square</div>
+                </div>
+            );
         }
 
         var nameStyle = style.nameContainerSingle;
@@ -162,8 +134,7 @@ class Match extends Component {
             );
         }
 
-
-        console.log("Match props: ", this.props)
+        console.log("Match props: ", this.props);
         return (
             <div className="container" style={style.container}>
                 <div className="row">
@@ -176,13 +147,10 @@ class Match extends Component {
                         <FlatButton
                             label={"Match " + this.props.match}
                             labelPosition="before"
-                            primary={true}
+                            secondary={true}
                             icon={<EditIcon/>}
                         />
-                        <div style={scoreStyle}>
-                            <div style={style.scoreValue}>{up}</div>
-                            <div style={style.scoreText}>up</div>
-                        </div>
+                        {score}
                     </div>
                     <div className="three columns" style={style.clydeNames}>
                         {clyde1}
@@ -190,14 +158,21 @@ class Match extends Component {
                     </div>
                     <div className="one column" style={style.clydes}>.</div>
                 </div>
-                <div style={style.scoreTable}>
-                    <div style={style.scoreRow}>
-                        {scoreBlocks}
-                    </div>
-                </div>
+                <ScoreTableContainer
+                    match={this.props.match}
+                />
             </div>
         )
     };
 }
 
 export default Match;
+
+/*
+ <FlatButton
+ label={"Match " + this.props.match}
+ labelPosition="before"
+ primary={true}
+ icon={<EditIcon/>}
+ />
+ */

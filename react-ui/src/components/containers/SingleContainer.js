@@ -23,6 +23,18 @@ class SingleContainer extends Component {
                 clyde = {firstName: player.name, surname: player.surname};
             }
         }
+        let up = 0;
+        if (this.props.scores && this.props.scores.singles) {
+            let holes = this.props.scores.singles[this.props.match - 1];
+            for (var i = 0; i < 18; i++) {
+                if (holes[i] === 1) {
+                    up++;
+                } else if (holes[i] === 2) {
+                    up--;
+                }
+            }
+        }
+
         return (
             <Match
                 match={this.props.match}
@@ -30,7 +42,7 @@ class SingleContainer extends Component {
                 mudhutter2={null}
                 clyde1={clyde}
                 clyde2={null}
-                holes={[3, 2, 3, 1, 1, 3, 1, 2, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0]}
+                up={up}
             />
         )
     };
@@ -40,6 +52,7 @@ const mapStateToProps = (state/*, props*/) => {
     return {
         players: state.actionReducer.players,
         singlesOrder: state.actionReducer.singlesOrder,
+        scores: state.actionReducer.scores,
     }
 };
 
