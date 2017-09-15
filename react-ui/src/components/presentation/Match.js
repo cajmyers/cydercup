@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-import ScoreTableContainer from '../containers/ScoreTableContainer';
+import ScoreTable from './ScoreTable';
 
 class Match extends Component {
     render() {
@@ -60,7 +60,7 @@ class Match extends Component {
             },
             scoreValue: {
                 display: "inline-block",
-                fontSize: 32,
+                fontSize: 30,
                 fontWeight: 900,
             },
             nameContainerSingle: {
@@ -158,8 +158,8 @@ class Match extends Component {
                     </div>
                     <div className="one column" style={style.clydes}>.</div>
                 </div>
-                <ScoreTableContainer
-                    match={this.props.match}
+                <ScoreTable
+                    holes={this.props.scores}
                 />
             </div>
         )

@@ -30,8 +30,9 @@ class MatchContainer extends Component {
             }
         }
         let up = 0;
+        var holes = null;
         if (this.props.scores && this.props.scores.fourballs) {
-            let holes = this.props.scores.fourballs[this.props.match - 1];
+            holes = this.props.scores.fourballs[this.props.match - 1];
             for (var i = 0; i < 18; i++) {
                 if (holes[i] === 1) {
                     up++;
@@ -44,6 +45,7 @@ class MatchContainer extends Component {
         return (
             <Match
                 match={this.props.match}
+                scores={holes}
                 mudhutter1={mudhutter1}
                 mudhutter2={mudhutter2}
                 clyde1={clyde1}

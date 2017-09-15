@@ -92,3 +92,40 @@ export function fetchPlayersIfNeeded() {
         }
     }
 }
+
+export const REQUEST_SCORES = 'REQUEST_SCORES';
+function requestScores() {
+    return {
+        type: REQUEST_SCORES
+    }
+}
+
+export const RECEIVE_SCORES = 'RECEIVE_SCORES';
+function receiveScores(json) {
+    console.log("receiveScores json: ", JSON.stringify(json));
+    return {
+        type: RECEIVE_SCORES,
+        scores: json.results,
+        receivedAt: Date.now()
+    }
+}
+
+export function fetchScores() {
+    if (MOCK) {
+        var json = require('../../assets/scores.json');
+        return function (dispatch) {
+            dispatch(receiveScores(json));
+        }
+    }
+    else {
+        var url = "/api/v1/scores";
+        console.log(url);
+        return function (dispatch) {
+            dispatch(requestScores());
+            return fetch(url)
+            .then(response => response.json())
+            .then(json => dispatch(receiveScores(json)))
+        }
+    }
+}
+

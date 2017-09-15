@@ -36,11 +36,11 @@ class ScoreTable extends Component {
         var none = <NotPlayedIcon style={style.hole} color="#aaaaaa"/>;
         for (var i = 0; i < 18; i++) {
             var icon = none;
-            if (this.props.holes[i] === 1) {
+            if (this.props.holes && this.props.holes[i] === 1) {
                 icon = mudhutter;
-            } else if (this.props.holes[i] === 2) {
+            } else if (this.props.holes && this.props.holes[i] === 2) {
                 icon = clyde;
-            } else if (this.props.holes[i] === 3) {
+            } else if (this.props.holes && this.props.holes[i] === 3) {
                 icon = half;
             }
             scoreBlocks.push(

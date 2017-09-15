@@ -1,5 +1,11 @@
 import {
-    SET_PAGE, REQUEST_PLAYERS, RECEIVE_PLAYERS, SET_MATCH_PLAYERS, SET_SINGLES_ORDER
+    SET_PAGE,
+    REQUEST_PLAYERS,
+    RECEIVE_PLAYERS,
+    SET_MATCH_PLAYERS,
+    SET_SINGLES_ORDER,
+    REQUEST_SCORES,
+    RECEIVE_SCORES
 } from '../actions/actions';
 
 export default function actionReducer(state = {}, action) {
@@ -7,7 +13,7 @@ export default function actionReducer(state = {}, action) {
     var newList = {};
     switch (action.type) {
         case SET_MATCH_PLAYERS:
-            let matchKey = action.team+"_"+action.matchNumber;
+            let matchKey = action.team + "_" + action.matchNumber;
             if (state.matchList) {
                 for (key in state.matchList) {
                     if (key === 'length' || !state.matchList.hasOwnProperty(key)) continue;
@@ -24,7 +30,7 @@ export default function actionReducer(state = {}, action) {
                 matchList: newList
             };
         case SET_SINGLES_ORDER:
-            let singlesKey = action.team+"_"+action.order;
+            let singlesKey = action.team + "_" + action.order;
             if (state.singlesOrder) {
                 for (key in state.singlesOrder) {
                     if (key === 'length' || !state.singlesOrder.hasOwnProperty(key)) continue;
@@ -51,6 +57,18 @@ export default function actionReducer(state = {}, action) {
                 ...state,
                 isFetchingPlayers: false,
                 players: action.players,
+                lastUpdated: action.receivedAt
+            };
+        case REQUEST_SCORES:
+            return {
+                ...state,
+                isFetchingScores: true,
+            };
+        case RECEIVE_SCORES:
+            return {
+                ...state,
+                isFetchingScores: false,
+                scores: action.scores,
                 lastUpdated: action.receivedAt
             };
         default:
