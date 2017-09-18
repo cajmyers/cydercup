@@ -2,6 +2,7 @@
 // Match.js
 import React, {Component} from 'react';
 import FlatButton from 'material-ui/FlatButton';
+import Divider from 'material-ui/Divider';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import ScoreTable from './ScoreTable';
 
@@ -9,8 +10,6 @@ class Match extends Component {
     render() {
         const style = {
             container: {
-                marginTop: 10,
-                marginBottom: 10,
                 backgroundColor: "white",
                 position: "relative",
             },
@@ -161,6 +160,7 @@ class Match extends Component {
                 <ScoreTable
                     holes={this.props.scores}
                 />
+                <Divider />
             </div>
         )
     };

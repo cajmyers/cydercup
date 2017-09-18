@@ -28,7 +28,7 @@ class MatchTabs extends Component {
                 fontWeight: 400,
             },
             content: {
-                backgroundColor: "#dfdfdf",
+                backgroundColor: "white",
             },
         }
 
