@@ -1,11 +1,28 @@
 //
 // MatchContainer.js
 import React, {Component} from 'react';
-import Match from '../presentation/Match'
+import Match from '../presentation/Match';
+import EditMatch from '../presentation/EditMatch';
 import {connect} from 'react-redux'
 
 
 class MatchContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            editDialogOpen: false,
+        };
+    }
+
+    handleEdit = (event) => {
+        this.setState({editDialogOpen: true});
+    };
+
+    handleClose = () => {
+        this.setState({editDialogOpen: false});
+    };
+
+
     render() {
         console.log("MatchContainer props: ", this.props);
 
@@ -44,17 +61,27 @@ class MatchContainer extends Component {
         }
 
         return (
-            <Match
-                match={this.props.match}
-                scores={holes}
-                mudhutter1={mudhutter1}
-                mudhutter2={mudhutter2}
-                clyde1={clyde1}
-                clyde2={clyde2}
-                up={up}
-                remaining={remaining}
-                completed={completed}
-            />
+            <div>
+                <Match
+                    match={this.props.match}
+                    handleEdit={this.handleEdit}
+                    scores={holes}
+                    mudhutter1={mudhutter1}
+                    mudhutter2={mudhutter2}
+                    clyde1={clyde1}
+                    clyde2={clyde2}
+                    up={up}
+                    remaining={remaining}
+                    completed={completed}
+                />
+                <EditMatch
+                    match={this.props.match}
+                    scores={holes}
+                    editDialogOpen={this.state.editDialogOpen}
+                    handleCancel={this.handleClose}
+                    handleSubmit={this.handleClose}
+                    />
+            </div>
         )
     };
 }

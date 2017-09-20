@@ -1,6 +1,8 @@
 //
 // actions.js
 import {MOCK} from '../../settings';
+var mockPlayers = null;
+var mockScores = null;
 
 export const SET_PAGE = 'SET_PAGE';
 export function setPage(pageId) {
@@ -50,9 +52,11 @@ export function setSinglesOrder(team, playerId, order) {
 
 function fetchPlayers() {
     if (MOCK) {
-        var json = require('../../assets/players.json');
+        if (!mockPlayers) {
+            mockPlayers = require('../../assets/players.json');
+        }
         return function (dispatch) {
-            dispatch(receivePlayers(json));
+            dispatch(receivePlayers(mockPlayers));
         }
     }
     else {
@@ -61,8 +65,8 @@ function fetchPlayers() {
         return function (dispatch) {
             dispatch(requestPlayers())
             return fetch(url)
-            .then(response => response.json())
-            .then(json => dispatch(receivePlayers(json)))
+                .then(response => response.json())
+                .then(json => dispatch(receivePlayers(json)))
         }
     }
 }
@@ -112,9 +116,11 @@ function receiveScores(json) {
 
 export function fetchScores() {
     if (MOCK) {
-        var json = require('../../assets/scores.json');
+        if (!mockScores) {
+            mockScores = require('../../assets/scores.json');
+        }
         return function (dispatch) {
-            dispatch(receiveScores(json));
+            dispatch(receiveScores(mockScores));
         }
     }
     else {
@@ -123,8 +129,8 @@ export function fetchScores() {
         return function (dispatch) {
             dispatch(requestScores());
             return fetch(url)
-            .then(response => response.json())
-            .then(json => dispatch(receiveScores(json)))
+                .then(response => response.json())
+                .then(json => dispatch(receiveScores(json)))
         }
     }
 }

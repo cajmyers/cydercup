@@ -173,6 +173,7 @@ class Match extends Component {
                             labelPosition="before"
                             secondary={true}
                             icon={<EditIcon/>}
+                            onClick={this.props.handleEdit}
                         />
                         {score}
                     </div>
