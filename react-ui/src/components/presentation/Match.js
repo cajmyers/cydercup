@@ -68,27 +68,52 @@ class Match extends Component {
         };
 
         var score = null;
-        if (this.props.up > 0) {
+        if (this.props.completed) {
+            let blockStyle = style.scoreBlock;
+            if (this.props.up > 0) {
+                blockStyle = style.scoreBlockUp;
+            } else if (this.props.up < 0) {
+                blockStyle = style.scoreBlockDown;
+            }
+            let text = "All Square";
+            let absUp = Math.abs(this.props.up);
+            if (absUp > 0) {
+                if (this.props.remaining > 0) {
+                    text = "Won " + absUp + " & " + this.props.remaining;
+                }
+                else {
+                    text = "Won by " + absUp;
+                }
+            }
             score = (
-                <div style={style.scoreBlockUp}>
-                    <div style={style.scoreValue}>{Math.abs(this.props.up)}</div>
-                    <div style={style.scoreText}>up</div>
-                </div>
-            );
-        } else if (this.props.up < 0) {
-            score = (
-                <div style={style.scoreBlockDown}>
-                    <div style={style.scoreValue}>{Math.abs(this.props.up)}</div>
-                    <div style={style.scoreText}>up</div>
+                <div style={blockStyle}>
+                    <div style={style.scoreText}>{text}</div>
                 </div>
             );
         }
-        else  {
-            score = (
-                <div style={style.scoreBlock}>
-                    <div style={style.scoreText}>All Square</div>
-                </div>
-            );
+        else {
+            if (this.props.up > 0) {
+                score = (
+                    <div style={style.scoreBlockUp}>
+                        <div style={style.scoreValue}>{Math.abs(this.props.up)}</div>
+                        <div style={style.scoreText}>up</div>
+                    </div>
+                );
+            } else if (this.props.up < 0) {
+                score = (
+                    <div style={style.scoreBlockDown}>
+                        <div style={style.scoreValue}>{Math.abs(this.props.up)}</div>
+                        <div style={style.scoreText}>up</div>
+                    </div>
+                );
+            }
+            else {
+                score = (
+                    <div style={style.scoreBlock}>
+                        <div style={style.scoreText}>All Square</div>
+                    </div>
+                );
+            }
         }
 
         var nameStyle = style.nameContainerSingle;

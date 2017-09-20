@@ -19,11 +19,18 @@ class ScoreSummaryContainer extends Component {
         }
 
         console.log("ConnectedScoreSummaryContainer props: ", this.props);
+
+        var mudhutters = 0;
+        var clydes = 0;
+        if (this.props.cupStatus) {
+            mudhutters = this.props.cupStatus.mudhutters;
+            clydes = this.props.cupStatus.clydebank;
+        }
         return (
             <ScoreSummary
                 totalPoints={totalPoints}
-                mudhutters={4.5}
-                clydes={3.5}
+                mudhutters={mudhutters}
+                clydes={clydes}
             />
         )
     };
@@ -32,6 +39,7 @@ class ScoreSummaryContainer extends Component {
 const mapStateToProps = (state/*, props*/) => {
     return {
         players: state.actionReducer.players,
+        cupStatus: state.actionReducer.cupStatus,
     }
 };
 

@@ -29,17 +29,18 @@ class MatchContainer extends Component {
                 clyde2 = {firstName: player.name, surname: player.surname};
             }
         }
-        let up = 0;
-        var holes = null;
+        var up = 0;
+        var remaining = 18;
+        var completed = false;
+        if (this.props.matchStatus && this.props.matchStatus.fourballs) {
+            let status = this.props.matchStatus.fourballs[this.props.match - 1];
+            up = status.up;
+            remaining = status.remaining;
+            completed = status.completed;
+        }
+        var holes = [];
         if (this.props.scores && this.props.scores.fourballs) {
             holes = this.props.scores.fourballs[this.props.match - 1];
-            for (var i = 0; i < 18; i++) {
-                if (holes[i] === 1) {
-                    up++;
-                } else if (holes[i] === 2) {
-                    up--;
-                }
-            }
         }
 
         return (
@@ -51,6 +52,8 @@ class MatchContainer extends Component {
                 clyde1={clyde1}
                 clyde2={clyde2}
                 up={up}
+                remaining={remaining}
+                completed={completed}
             />
         )
     };
@@ -61,6 +64,7 @@ const mapStateToProps = (state/*, props*/) => {
         players: state.actionReducer.players,
         matchList: state.actionReducer.matchList,
         scores: state.actionReducer.scores,
+        matchStatus: state.actionReducer.matchStatus
     }
 };
 
