@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import Match from '../presentation/Match';
 import EditMatch from '../presentation/EditMatch';
+import {sendScore} from '../../model/actions/actions';
 import {connect} from 'react-redux'
 
 
@@ -22,6 +23,10 @@ class MatchContainer extends Component {
         this.setState({editDialogOpen: false});
     };
 
+    handleSubmit = (hole, winner) => {
+        this.props.dispatch(sendScore("fourballs", this.props.match, hole, winner));
+        this.setState({editDialogOpen: false});
+    };
 
     render() {
         console.log("MatchContainer props: ", this.props);
@@ -79,7 +84,7 @@ class MatchContainer extends Component {
                     scores={holes}
                     editDialogOpen={this.state.editDialogOpen}
                     handleCancel={this.handleClose}
-                    handleSubmit={this.handleClose}
+                    handleSubmit={this.handleSubmit}
                     />
             </div>
         )

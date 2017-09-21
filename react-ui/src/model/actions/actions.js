@@ -135,3 +135,14 @@ export function fetchScores() {
     }
 }
 
+export function sendScore(matchType, match, hole, winner) {
+    if (MOCK) {
+        if (!mockScores) {
+            mockScores = require('../../assets/scores.json');
+        }
+        mockScores["results"][matchType][match-1][hole-1] = winner;
+        return function (dispatch) {
+            dispatch(receiveScores(mockScores));
+        }
+    }
+}
