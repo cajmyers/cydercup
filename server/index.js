@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-const MOCK = true;
+const MOCK = false;
 var players = [];
 var scores = [];
 
@@ -18,14 +18,13 @@ app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 // Answer API requests.
 app.get('/api/v1/players', function (req, res) {
     res.set('Content-Type', 'application/json');
-    if (false) {
+    if (MOCK) {
         if (players.length === 0) {
             players = require('./assets/players.json');
         }
         res.send(players);
     }
     else {
-        console.log(process.env.DATABASE_URL);
         pg.connect(process.env.DATABASE_URL, function (err, client, done) {
             client.query('SELECT * FROM players', function (err, result) {
                 done();
@@ -41,6 +40,35 @@ app.get('/api/v1/players', function (req, res) {
     }
 });
 
+function sendScores(res) {
+    pg.connect(process.env.DATABASE_URL, function (err, client, done) {
+        client.query('SELECT * FROM scores ORDER BY id ASC', function (err, result) {
+            done();
+            if (err) {
+                console.error(err);
+                res.send("Error " + err);
+            }
+            else {
+                var data = {"fourballs": [], "singles": []}
+                for (let i = 0; i < result.rows.length; i++) {
+                    row = result.rows[i];
+                    let dataRow = [];
+                    for (let n = 1; n <= 18; n++) {
+                        dataRow.push(row["hole_"+n]);
+                    }
+                    if (i < 6) {
+                        data.fourballs.push(dataRow);
+                    }
+                    else {
+                        data.singles.push(dataRow);
+                    }
+                }
+                res.send({results: data});
+            }
+        });
+    });    
+}
+
 app.get('/api/v1/scores', function (req, res) {
     res.set('Content-Type', 'application/json');
     if (MOCK) {
@@ -50,19 +78,7 @@ app.get('/api/v1/scores', function (req, res) {
         res.send(scores);
     }
     else {
-        console.log(process.env.DATABASE_URL);
-        pg.connect(process.env.DATABASE_URL, function (err, client, done) {
-            client.query('SELECT * FROM players', function (err, result) {
-                done();
-                if (err) {
-                    console.error(err);
-                    res.send("Error " + err);
-                }
-                else {
-                    res.send({results: result.rows});
-                }
-            });
-        });
+        sendScores(res);
     }
 });
 
@@ -75,6 +91,26 @@ app.post('/api/v1/score', function (req, res) {
     if (MOCK) {
         scores["results"][matchType][match - 1][hole - 1] = winner;
         res.send(scores);
+    }
+    else {
+        var id = match;
+        if (matchType === "singles") {
+            id += 6;
+        }
+        var query = "UPDATE scores SET hole_" + hole + " = " + winner + " WHERE id = " + id;
+        console.log("post score query: ", query);
+        pg.connect(process.env.DATABASE_URL, function (err, client, done) {
+            client.query(query, function (err, result) {
+                done();
+                if (err) {
+                    console.error(err);
+                    res.send("Error " + err);
+                }
+                else {
+                    sendScores(res);
+                }
+            });
+        });
     }
 });
 

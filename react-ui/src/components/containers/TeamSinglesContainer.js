@@ -14,11 +14,11 @@ class TeamSinglesContainer extends Component {
     };
 
     render() {
-        console.log("TeamSinglesContainer: ", this.props.players);
+        console.log("TeamSinglesContainer: ", this.props);
         let playerItems = [];
         if (this.props.players) {
             this.props.players.forEach(player => {
-                if (player.team === this.props.team) {
+                if (player.team.trim() === this.props.team) {
                     playerItems.push(
                         <MenuItem
                             value={player.id}
@@ -33,7 +33,7 @@ class TeamSinglesContainer extends Component {
         if (this.props.players) {
             var index = 1;
             this.props.players.forEach((player) => {
-                if (player.team === this.props.team) {
+                if (player.team.trim() === this.props.team) {
                     let selected = null;
                     let key = this.props.team+"_"+index;
                     if (this.props.singlesOrder && this.props.singlesOrder[key]) {

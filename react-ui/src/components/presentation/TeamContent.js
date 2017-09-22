@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import TeamPlayerName from './TeamPlayerName';
 import TeamMatchContainer from '../containers/TeamMatchContainer';
 import TeamSinglesContainer from '../containers/TeamSinglesContainer';
@@ -18,11 +16,6 @@ class TeamContent extends Component {
                 fontWeight: 500,
                 marginTop: 15,
                 display: "inline-block",
-            },
-            addButton: {
-                position: "absolute",
-                right: 10,
-                top: 3,
             },
             section: {
                 marginBottom: 30,
@@ -48,9 +41,6 @@ class TeamContent extends Component {
                 <h1 style={style.h1}>
                     Players
                 </h1>
-                <FloatingActionButton mini={true} style={style.addButton} backgroundColor="DarkSeaGreen">
-                    <ContentAdd />
-                </FloatingActionButton>
                 <div style={style.section}>
                     {players}
                 </div>

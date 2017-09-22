@@ -44,7 +44,7 @@ class App extends Component {
         break;
       }
       default: {
-        page = <PageScoreContainer />;
+        page = <PageTeamsContainer />;
       }
     }
     return (
