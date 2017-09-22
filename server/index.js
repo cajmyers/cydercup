@@ -18,7 +18,7 @@ app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 // Answer API requests.
 app.get('/api/v1/players', function (req, res) {
     res.set('Content-Type', 'application/json');
-    if (MOCK) {
+    if (false) {
         if (players.length === 0) {
             players = require('./assets/players.json');
         }
