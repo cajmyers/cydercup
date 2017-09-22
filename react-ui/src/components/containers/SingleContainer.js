@@ -2,15 +2,37 @@
 // MatchContainer.js
 import React, {Component} from 'react';
 import Match from '../presentation/Match'
+import EditMatch from '../presentation/EditMatch';
+import {sendScore} from '../../model/actions/actions';
 import {connect} from 'react-redux'
 
 
 class SingleContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            editDialogOpen: false,
+        };
+    }
+
+    handleEdit = (event) => {
+        this.setState({editDialogOpen: true});
+    };
+
+    handleClose = () => {
+        this.setState({editDialogOpen: false});
+    };
+
+    handleSubmit = (hole, winner) => {
+        this.props.dispatch(sendScore("singles", this.props.match, hole, winner));
+        this.setState({editDialogOpen: false});
+    };
+
     render() {
         console.log("MatchContainer props: ", this.props);
 
         let mudhutter = {firstName: "", surname: ""};
-        let clyde =  {firstName: "", surname: ""};
+        let clyde = {firstName: "", surname: ""};
         if (this.props.players && this.props.singlesOrder) {
             if (this.props.singlesOrder["mudhutters_" + this.props.match]) {
                 let playerId = this.props.singlesOrder["mudhutters_" + this.props.match];
@@ -23,27 +45,43 @@ class SingleContainer extends Component {
                 clyde = {firstName: player.name, surname: player.surname};
             }
         }
-        let up = 0;
+        var up = 0;
+        var remaining = 18;
+        var completed = false;
+        if (this.props.matchStatus && this.props.matchStatus.fourballs) {
+            let status = this.props.matchStatus.singles[this.props.match - 1];
+            up = status.up;
+            remaining = status.remaining;
+            completed = status.completed;
+        }
+        var holes = [];
         if (this.props.scores && this.props.scores.singles) {
-            let holes = this.props.scores.singles[this.props.match - 1];
-            for (var i = 0; i < 18; i++) {
-                if (holes[i] === 1) {
-                    up++;
-                } else if (holes[i] === 2) {
-                    up--;
-                }
-            }
+            holes = this.props.scores.singles[this.props.match - 1];
         }
 
+
         return (
-            <Match
-                match={this.props.match}
-                mudhutter1={mudhutter}
-                mudhutter2={null}
-                clyde1={clyde}
-                clyde2={null}
-                up={up}
-            />
+            <div>
+                <Match
+                    match={this.props.match}
+                    handleEdit={this.handleEdit}
+                    scores={holes}
+                    mudhutter1={mudhutter}
+                    mudhutter2={null}
+                    clyde1={clyde}
+                    clyde2={null}
+                    up={up}
+                    remaining={remaining}
+                    completed={completed}
+                />
+                <EditMatch
+                    match={this.props.match}
+                    scores={holes}
+                    editDialogOpen={this.state.editDialogOpen}
+                    handleCancel={this.handleClose}
+                    handleSubmit={this.handleSubmit}
+                />
+            </div>
         )
     };
 }
@@ -53,6 +91,7 @@ const mapStateToProps = (state/*, props*/) => {
         players: state.actionReducer.players,
         singlesOrder: state.actionReducer.singlesOrder,
         scores: state.actionReducer.scores,
+        matchStatus: state.actionReducer.matchStatus,
     }
 };
 

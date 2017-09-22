@@ -85,7 +85,7 @@ class MatchContainer extends Component {
                     editDialogOpen={this.state.editDialogOpen}
                     handleCancel={this.handleClose}
                     handleSubmit={this.handleSubmit}
-                    />
+                />
             </div>
         )
     };

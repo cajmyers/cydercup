@@ -64,6 +64,9 @@ class Match extends Component {
             },
             nameContainerSingle: {
                 marginTop: 20,
+            },
+            matchButton: {
+                paddingLeft: 8,
             }
         };
 
@@ -171,6 +174,7 @@ class Match extends Component {
                         <FlatButton
                             label={"Match " + this.props.match}
                             labelPosition="before"
+                            labelStyle={style.matchButton}
                             secondary={true}
                             icon={<EditIcon/>}
                             onClick={this.props.handleEdit}

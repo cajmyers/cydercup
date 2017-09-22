@@ -1,8 +1,5 @@
 //
 // actions.js
-import {MOCK} from '../../settings';
-var mockPlayers = null;
-var mockScores = null;
 
 export const SET_PAGE = 'SET_PAGE';
 export function setPage(pageId) {
@@ -51,23 +48,13 @@ export function setSinglesOrder(team, playerId, order) {
 }
 
 function fetchPlayers() {
-    if (MOCK) {
-        if (!mockPlayers) {
-            mockPlayers = require('../../assets/players.json');
-        }
-        return function (dispatch) {
-            dispatch(receivePlayers(mockPlayers));
-        }
-    }
-    else {
-        var url = "/api";
-        console.log(url);
-        return function (dispatch) {
-            dispatch(requestPlayers())
-            return fetch(url)
-                .then(response => response.json())
-                .then(json => dispatch(receivePlayers(json)))
-        }
+    var url = "/api/v1/players";
+    console.log(url);
+    return function (dispatch) {
+        dispatch(requestPlayers())
+        return fetch(url)
+            .then(response => response.json())
+            .then(json => dispatch(receivePlayers(json)))
     }
 }
 
@@ -115,34 +102,38 @@ function receiveScores(json) {
 }
 
 export function fetchScores() {
-    if (MOCK) {
-        if (!mockScores) {
-            mockScores = require('../../assets/scores.json');
-        }
-        return function (dispatch) {
-            dispatch(receiveScores(mockScores));
-        }
-    }
-    else {
-        var url = "/api/v1/scores";
-        console.log(url);
-        return function (dispatch) {
-            dispatch(requestScores());
-            return fetch(url)
-                .then(response => response.json())
-                .then(json => dispatch(receiveScores(json)))
-        }
+    var url = "/api/v1/scores";
+    console.log(url);
+    return function (dispatch) {
+        dispatch(requestScores());
+        return fetch(url)
+            .then(response => response.json())
+            .then(json => dispatch(receiveScores(json)))
     }
 }
 
 export function sendScore(matchType, match, hole, winner) {
-    if (MOCK) {
-        if (!mockScores) {
-            mockScores = require('../../assets/scores.json');
-        }
-        mockScores["results"][matchType][match-1][hole-1] = winner;
-        return function (dispatch) {
-            dispatch(receiveScores(mockScores));
-        }
+    var url = "/api/v1/score";
+    console.log(url);
+    var opts = {
+        matchType: matchType,
+        match: match,
+        hole: hole,
+        winner: winner
+    };
+    return (dispatch) => {
+        return fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log('Complete:', json);
+                dispatch(receiveScores(json))
+            })
     }
 }

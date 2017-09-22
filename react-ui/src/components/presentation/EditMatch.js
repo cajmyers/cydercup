@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Dialog from 'material-ui/Dialog';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -19,7 +20,7 @@ class EditMatch extends Component {
         this.setState({hole: value});
     };
 
-    handleWinner = (event, index, value) => {
+    handleWinner = (event, value) => {
         this.props.handleSubmit(this.state.hole, value);
     };
 
@@ -38,6 +39,9 @@ class EditMatch extends Component {
 
     render() {
         const style = {
+            container: {
+                textAlign: "center",
+            },
             title: {
                 paddingBottom: 0,
                 textAlign: "center",
@@ -51,16 +55,26 @@ class EditMatch extends Component {
                 height: 16,
             },
             winnerIcon: {
-                textAlign: "center",
-                width: "15%",
+                textAlign: "left",
                 display: "inline-block",
                 verticalAlign: "top",
                 paddingTop: 33,
+                paddingLeft: 4,
+                paddingRight: 20,
             },
-            winnerSelect: {
-                width: "85%",
+            holeSelect: {
+                width: 80,
                 display: "inline-block",
                 paddingBottom: 10,
+            },
+            radioGroup: {
+                fontSize: 16,
+                width: 140,
+                display: "inline-block",
+                textAlign: "left",
+            },
+            radioButton: {
+                marginBottom: 5,
             },
         };
         const actions = [
@@ -81,11 +95,11 @@ class EditMatch extends Component {
         var half = <PlayedIcon style={style.hole} color="#aaaaaa"/>;
         var none = <NotPlayedIcon style={style.hole} color="#aaaaaa"/>;
 
-        const winner = [];
-        winner.push(<MenuItem value={0} key={0} leftIcon={none} primaryText="Not Played"/>);
-        winner.push(<MenuItem value={1} key={1} leftIcon={mudhutter} primaryText="Mudhutters"/>);
-        winner.push(<MenuItem value={2} key={2} leftIcon={clyde} primaryText="Clydebank"/>);
-        winner.push(<MenuItem value={3} key={3} leftIcon={half} primaryText="Halved"/>);
+        const buttons = [];
+        buttons.push(<RadioButton value={0} key={0} label="Not Played" style={style.radioButton}/>);
+        buttons.push(<RadioButton value={1} key={1} label="Mudhutters" style={style.radioButton}/>);
+        buttons.push(<RadioButton value={2} key={2} label="Clydebank" style={style.radioButton}/>);
+        buttons.push(<RadioButton value={3} key={3} label="Halved" style={style.radioButton}/>);
 
         var selected = 0;
         if (this.props.scores) {
@@ -108,6 +122,7 @@ class EditMatch extends Component {
                 break;
         }
 
+
         return (
             <Dialog
                 title={"Match " + this.props.match}
@@ -117,26 +132,29 @@ class EditMatch extends Component {
                 open={this.props.editDialogOpen}
                 onRequestClose={this.props.handleCancel}
             >
-                <SelectField
-                    floatingLabelText="Hole"
-                    fullWidth={true}
-                    value={this.state.hole}
-                    onChange={this.handleChange}
-                >
-                    {holes}
-                </SelectField>
-                <div style={style.winnerIcon}>
-                    {selectedIcon}
-                </div>
-                <div style={style.winnerSelect}>
-                    <SelectField
-                        floatingLabelText="Winner"
-                        fullWidth={true}
-                        value={selected}
+                <div style={style.container}>
+                    <div style={style.winnerIcon}>
+                        {selectedIcon}
+                    </div>
+                    <div style={style.holeSelect}>
+                        <SelectField
+                            floatingLabelText="Hole"
+                            fullWidth={true}
+                            value={this.state.hole}
+                            onChange={this.handleChange}
+                        >
+                            {holes}
+                        </SelectField>
+                    </div>
+                    <br/>
+                    <RadioButtonGroup
+                        name="winner"
+                        style={style.radioGroup}
+                        valueSelected={selected}
                         onChange={this.handleWinner}
                     >
-                        {winner}
-                    </SelectField>
+                        {buttons}
+                    </RadioButtonGroup>
                 </div>
             </Dialog>
         )
