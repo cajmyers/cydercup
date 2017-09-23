@@ -26,24 +26,94 @@ function receivePlayers(json) {
     }
 }
 
-export const SET_MATCH_PLAYERS = "SET_MATCH_PLAYERS";
-export function setMatchPlayer(matchNumber, team, player1Id, player2Id) {
-    return {
-        type: SET_MATCH_PLAYERS,
-        matchNumber: matchNumber,
+export function setMatchPlayer(match, team, player1id, player2id) {
+    var url = "/api/v1/matchplayers";
+    console.log(url);
+    var opts = {
         team: team,
-        player1Id: player1Id,
-        player2Id: player2Id
+        match: match,
+        player1id: player1id,
+        player2id: player2id
+    };
+    return (dispatch) => {
+        return fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log('Complete:', json);
+                dispatch(receiveMatchList(json))
+            })
     }
 }
 
-export const SET_SINGLES_ORDER = "SET_SINGLES_ORDER";
-export function setSinglesOrder(team, playerId, order) {
+export const RECEIVE_MATCH_LIST = "RECEIVE_MATCH_LIST";
+export function receiveMatchList(json) {
     return {
-        type: SET_SINGLES_ORDER,
+        type: RECEIVE_MATCH_LIST,
+        matchList: json.results,
+        receivedAt: Date.now()
+    }
+}
+
+export function fetchMatchList() {
+    var url = "/api/v1/matchlist";
+    console.log(url);
+    return function (dispatch) {
+        dispatch(requestScores());
+        return fetch(url)
+            .then(response => response.json())
+            .then(json => dispatch(receiveMatchList(json)))
+    }
+}
+
+export const RECEIVE_SINGLES_ORDER = "RECEIVE_SINGLES_ORDER";
+export function receiveSinglesOrder(json) {
+    return {
+        type: RECEIVE_SINGLES_ORDER,
+        singlesOrder: json.results,
+        receivedAt: Date.now()
+    }
+}
+
+export function fetchSinglesOrder() {
+    var url = "/api/v1/singlesorder";
+    console.log(url);
+    return function (dispatch) {
+        dispatch(requestScores());
+        return fetch(url)
+            .then(response => response.json())
+            .then(json => dispatch(receiveSinglesOrder(json)))
+    }
+}
+
+export function setSinglesOrder(team, playerid, order) {
+    var url = "/api/v1/singlesorder";
+    console.log(url);
+    var opts = {
         team: team,
-        playerId: playerId,
-        order: order,
+        playerorder: order,
+        playerid: playerid
+    };
+    return (dispatch) => {
+        return fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log('Complete:', json);
+                dispatch(receiveSinglesOrder(json))
+            })
     }
 }
 
@@ -134,6 +204,31 @@ export function sendScore(matchType, match, hole, winner) {
             .then(json => {
                 console.log('Complete:', json);
                 dispatch(receiveScores(json))
+            })
+    }
+}
+
+export function setPlayerName(id, name, surname) {
+    var url = "/api/v1/player";
+    console.log(url);
+    var opts = {
+        id: id,
+        name: name,
+        surname: surname
+    };
+    return (dispatch) => {
+        return fetch(url, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(opts)
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log('Complete:', json);
+                dispatch(receivePlayers(json))
             })
     }
 }

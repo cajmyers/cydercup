@@ -1,0 +1,16 @@
+{
+    "results": {
+        "mudhutters_1": {"player1Id": 1, "player2Id": 3},
+        "mudhutters_2": {"player1Id": null, "player2Id": null},
+        "mudhutters_3": {"player1Id": null, "player2Id": null},
+        "mudhutters_4": {"player1Id": null, "player2Id": null},
+        "mudhutters_5": {"player1Id": null, "player2Id": null},
+        "mudhutters_6": {"player1Id": null, "player2Id": null},
+        "clydebank_1": {"player1Id": 13, "player2Id": 15},
+        "clydebank_2": {"player1Id": null, "player2Id": null},
+        "clydebank_3": {"player1Id": null, "player2Id": null},
+        "clydebank_4": {"player1Id": null, "player2Id": null},
+        "clydebank_5": {"player1Id": null, "player2Id": null},
+        "clydebank_6": {"player1Id": null, "player2Id": null}
+    }
+}    

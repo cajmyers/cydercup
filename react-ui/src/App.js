@@ -10,7 +10,7 @@ import PageScoreContainer from './components/containers/PageScoreContainer';
 import PageTeamsContainer from './components/containers/PageTeamsContainer';
 import HeaderContainer from './components/containers/HeaderContainer';
 import {connect} from 'react-redux'
-import {fetchPlayersIfNeeded} from './model/actions/actions'
+import {fetchPlayersIfNeeded, fetchMatchList, fetchSinglesOrder} from './model/actions/actions'
 
 
 injectTapEventPlugin();
@@ -18,6 +18,8 @@ injectTapEventPlugin();
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPlayersIfNeeded());
+    this.props.dispatch(fetchMatchList());
+    this.props.dispatch(fetchSinglesOrder());
   }
 
   render() {

@@ -30,7 +30,7 @@ class TeamMatchContainer extends Component {
         let playerItems = [];
         if (this.props.players) {
             this.props.players.forEach(player => {
-                if (player.team === this.props.team) {
+                if (player.team.trim() === this.props.team) {
                     playerItems.push(
                         <MenuItem
                             value={player.id}

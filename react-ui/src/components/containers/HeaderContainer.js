@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {setPage, fetchScores} from '../../model/actions/actions'
+import {setPage, fetchScores, fetchPlayersIfNeeded, fetchMatchList, fetchSinglesOrder} from '../../model/actions/actions'
 import MenuItem from 'material-ui/MenuItem';
 import Header from '../presentation/Header'
 
@@ -14,6 +14,9 @@ class HeaderContainer extends Component {
     handleRefresh = (event) => {
         console.log("handleRefresh event: ", event);
         this.props.dispatch(fetchScores());
+        this.props.dispatch(fetchPlayersIfNeeded());
+        this.props.dispatch(fetchMatchList());
+        this.props.dispatch(fetchSinglesOrder());
     };
 
     render() {

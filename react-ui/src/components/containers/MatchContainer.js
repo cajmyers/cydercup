@@ -38,17 +38,25 @@ class MatchContainer extends Component {
         if (this.props.players && this.props.matchList) {
             if (this.props.matchList["mudhutters_" + this.props.match]) {
                 let playerIds = this.props.matchList["mudhutters_" + this.props.match];
-                let player = this.props.players[playerIds.player1Id - 1];
-                mudhutter1 = {firstName: player.name, surname: player.surname};
-                player = this.props.players[playerIds.player2Id - 1];
-                mudhutter2 = {firstName: player.name, surname: player.surname};
+                if (playerIds.player1Id) {
+                    let player = this.props.players[playerIds.player1Id - 1];
+                    mudhutter1 = {firstName: player.name, surname: player.surname};
+                }
+                if (playerIds.player2Id) {
+                    let player = this.props.players[playerIds.player2Id - 1];
+                    mudhutter2 = {firstName: player.name, surname: player.surname};
+                }
             }
             if (this.props.matchList["clydebank_" + this.props.match]) {
                 let playerIds = this.props.matchList["clydebank_" + this.props.match];
-                let player = this.props.players[playerIds.player1Id - 1];
-                clyde1 = {firstName: player.name, surname: player.surname};
-                player = this.props.players[playerIds.player2Id - 1];
-                clyde2 = {firstName: player.name, surname: player.surname};
+                if (playerIds.player1Id) {
+                    let player = this.props.players[playerIds.player1Id - 1];
+                    clyde1 = {firstName: player.name, surname: player.surname};
+                }
+                if (playerIds.player2Id) {
+                    let player = this.props.players[playerIds.player2Id - 1];
+                    clyde2 = {firstName: player.name, surname: player.surname};
+                }
             }
         }
         var up = 0;

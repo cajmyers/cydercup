@@ -12,17 +12,9 @@ class TeamMatch extends Component {
                 marginBottom: 0,
             },
             matchContainer: {
-                width: "100%",
+                width: "80%",
+                margin: "auto",
             },
-            matchFirstPlayer: {
-                maxWidth: "40%",
-            },
-            connector: {
-                display: "inline-block",
-                verticalAlign: "top",
-                margin: 10,
-                marginTop: 20,
-            }
         };
 
         return (
@@ -31,19 +23,19 @@ class TeamMatch extends Component {
                     Match {this.props.matchNumber}
                 </h1>
                 <SelectField
-                    style={style.matchFirstPlayer}
                     value={this.props.player1}
+                    fullWidth={true}
                     onChange={this.props.selectPlayer1}
                     maxHeight={200}
                 >
                     {this.props.players}
                 </SelectField>
-                <div style={style.connector}>
+                <div>
                     <span>and</span>
                 </div>
                 <SelectField
-                    style={style.matchFirstPlayer}
                     value={this.props.player2}
+                    fullWidth={true}
                     onChange={this.props.selectPlayer2}
                     maxHeight={200}
                 >
