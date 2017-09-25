@@ -255,6 +255,32 @@ app.post('/api/v1/score', function (req, res) {
     }
 });
 
+app.delete('/api/v1/scores', function (req, res) {
+    if (MOCK) {
+        scores = require('./assets/scores.json');
+        res.send(scores);
+    }
+    else {
+        var query = "UPDATE scores SET hole_1 = 0";
+        for (let i = 2; i <= 18; i++) {
+            query += ", hole_" + i + " = 0";
+        }
+        console.log("delete scores query: ", query);
+        pg.connect(process.env.DATABASE_URL, function (err, client, done) {
+            client.query(query, function (err, result) {
+                done();
+                if (err) {
+                    console.error(err);
+                    res.send("Error " + err);
+                }
+                else {
+                    sendScores(res);
+                }
+            });
+        });
+    }
+});
+
 app.post('/api/v1/player', function (req, res) {
     var id = parseInt(req.body.id, 10);
     var name = req.body.name;

@@ -67,8 +67,8 @@ export function setMatchPlayer(match, team, player1id, player2id) {
                 dispatch(receiveMatchList(json))
             })
             .catch(function (error) {
-                console.error("fetchScores error: ", error);
-                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                console.error("setMatchPlayer error: ", error);
+                dispatch(issueSnackbarMessage("setMatchPlayer: " + error));
                 dispatch(requestPlayersCancelled());
             });
     }
@@ -92,8 +92,8 @@ export function fetchMatchList() {
             .then(response => response.json())
             .then(json => dispatch(receiveMatchList(json)))
             .catch(function (error) {
-                console.error("fetchScores error: ", error);
-                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                console.error("fetchMatchList error: ", error);
+                dispatch(issueSnackbarMessage("fetchMatchList: " + error));
                 dispatch(requestPlayersCancelled());
             });
     }
@@ -117,8 +117,8 @@ export function fetchSinglesOrder() {
             .then(response => response.json())
             .then(json => dispatch(receiveSinglesOrder(json)))
             .catch(function (error) {
-                console.error("fetchScores error: ", error);
-                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                console.error("fetchSinglesOrder error: ", error);
+                dispatch(issueSnackbarMessage("fetchSinglesOrder: " + error));
                 dispatch(requestPlayersCancelled());
             });
     }
@@ -148,8 +148,8 @@ export function setSinglesOrder(team, playerid, order) {
                 dispatch(receiveSinglesOrder(json))
             })
             .catch(function (error) {
-                console.error("fetchScores error: ", error);
-                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                console.error("setSinglesOrder error: ", error);
+                dispatch(issueSnackbarMessage("setSinglesOrder: " + error));
                 dispatch(requestPlayersCancelled());
             });
     }
@@ -164,8 +164,8 @@ function fetchPlayers() {
             .then(response => response.json())
             .then(json => dispatch(receivePlayers(json)))
             .catch(function (error) {
-                console.error("fetchScores error: ", error);
-                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                console.error("fetchPlayers error: ", error);
+                dispatch(issueSnackbarMessage("fetchPlayers: " + error));
                 dispatch(requestPlayersCancelled());
             });
     }
@@ -262,8 +262,8 @@ export function sendScore(matchType, match, hole, winner) {
                 dispatch(receiveScores(json))
             })
             .catch(function (error) {
-                console.error("fetchScores error: ", error);
-                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                console.error("sendScore error: ", error);
+                dispatch(issueSnackbarMessage("sendScore: " + error));
                 dispatch(requestScoresCancelled());
             });
     }
@@ -293,9 +293,31 @@ export function setPlayerName(id, name, surname) {
                 dispatch(receivePlayers(json))
             })
             .catch(function (error) {
-                console.error("fetchScores error: ", error);
-                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                console.error("setPlayerName error: ", error);
+                dispatch(issueSnackbarMessage("setPlayerName: " + error));
                 dispatch(requestPlayersCancelled());
             });
     }
 }
+
+export function deleteAll() {
+    var url = "/api/v1/scores";
+    console.log(url);
+    return (dispatch) => {
+        dispatch(requestScores());
+        return fetch(url, {
+            method: 'delete'
+        })
+            .then(response => response.json())
+            .then(json => {
+                console.log('Complete:', json);
+                dispatch(receiveScores(json))
+            })
+            .catch(function (error) {
+                console.error("deleteAll error: ", error);
+                dispatch(issueSnackbarMessage("deleteAll: " + error));
+                dispatch(requestScoresCancelled());
+            });
+    }
+}
+

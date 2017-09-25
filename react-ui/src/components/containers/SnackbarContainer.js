@@ -32,6 +32,7 @@ class SnackbarContainer extends Component {
         const style = {
             content: {
                 color: "white",
+                textAlign: "center",
             }
         };
         DEBUG && console.log("SnackbarContainer render this.state.open: ", this.state.open);

@@ -11,10 +11,10 @@ class Header extends Component {
     render() {
         const style = {
             container: {
-                position: 'absolute',
+                position: 'fixed',
                 width: '100%',
                 maxWidth: 960,
-                zIndex: 99,
+                zIndex: 99999,
                 top: 0,
                 left: 0,
                 textAlign: 'right'
@@ -38,7 +38,7 @@ class Header extends Component {
         }
 
         return (
-            <div style={style.container}>
+            <div className="Header" style={style.container}>
                 <Paper style={style.banner} zDepth={2} rounded={false}>
                     <img style={style.image} src={require('../../images/cydercup_logo.png')} alt="None"/>
                     <ProgressContainer/>
