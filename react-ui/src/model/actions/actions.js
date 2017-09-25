@@ -1,6 +1,15 @@
 //
 // actions.js
 
+
+export const ISSUE_SNACKBAR_MESSAGE = 'ISSUE_SNACKBAR_MESSAGE';
+export function issueSnackbarMessage(message) {
+    return {
+        type: ISSUE_SNACKBAR_MESSAGE,
+        message: message
+    }
+}
+
 export const SET_PAGE = 'SET_PAGE';
 export function setPage(pageId) {
     return {
@@ -13,6 +22,13 @@ export const REQUEST_PLAYERS = 'REQUEST_PLAYERS';
 function requestPlayers() {
     return {
         type: REQUEST_PLAYERS
+    }
+}
+
+export const REQUEST_PLAYERS_CANCELLED = 'REQUEST_PLAYERS_CANCELLED';
+function requestPlayersCancelled() {
+    return {
+        type: REQUEST_PLAYERS_CANCELLED
     }
 }
 
@@ -36,6 +52,7 @@ export function setMatchPlayer(match, team, player1id, player2id) {
         player2id: player2id
     };
     return (dispatch) => {
+        dispatch(requestPlayers());
         return fetch(url, {
             method: 'post',
             headers: {
@@ -49,6 +66,11 @@ export function setMatchPlayer(match, team, player1id, player2id) {
                 console.log('Complete:', json);
                 dispatch(receiveMatchList(json))
             })
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestPlayersCancelled());
+            });
     }
 }
 
@@ -65,10 +87,15 @@ export function fetchMatchList() {
     var url = "/api/v1/matchlist";
     console.log(url);
     return function (dispatch) {
-        dispatch(requestScores());
+        dispatch(requestPlayers());
         return fetch(url)
             .then(response => response.json())
             .then(json => dispatch(receiveMatchList(json)))
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestPlayersCancelled());
+            });
     }
 }
 
@@ -85,10 +112,15 @@ export function fetchSinglesOrder() {
     var url = "/api/v1/singlesorder";
     console.log(url);
     return function (dispatch) {
-        dispatch(requestScores());
+        dispatch(requestPlayers());
         return fetch(url)
             .then(response => response.json())
             .then(json => dispatch(receiveSinglesOrder(json)))
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestPlayersCancelled());
+            });
     }
 }
 
@@ -101,6 +133,7 @@ export function setSinglesOrder(team, playerid, order) {
         playerid: playerid
     };
     return (dispatch) => {
+        dispatch(requestPlayers());
         return fetch(url, {
             method: 'post',
             headers: {
@@ -114,6 +147,11 @@ export function setSinglesOrder(team, playerid, order) {
                 console.log('Complete:', json);
                 dispatch(receiveSinglesOrder(json))
             })
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestPlayersCancelled());
+            });
     }
 }
 
@@ -121,10 +159,15 @@ function fetchPlayers() {
     var url = "/api/v1/players";
     console.log(url);
     return function (dispatch) {
-        dispatch(requestPlayers())
+        dispatch(requestPlayers());
         return fetch(url)
             .then(response => response.json())
             .then(json => dispatch(receivePlayers(json)))
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestPlayersCancelled());
+            });
     }
 }
 
@@ -161,6 +204,13 @@ function requestScores() {
     }
 }
 
+export const REQUEST_SCORES_CANCELLED = 'REQUEST_SCORES_CANCELLED';
+function requestScoresCancelled() {
+    return {
+        type: REQUEST_SCORES_CANCELLED
+    }
+}
+
 export const RECEIVE_SCORES = 'RECEIVE_SCORES';
 function receiveScores(json) {
     console.log("receiveScores json: ", JSON.stringify(json));
@@ -179,6 +229,11 @@ export function fetchScores() {
         return fetch(url)
             .then(response => response.json())
             .then(json => dispatch(receiveScores(json)))
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestScoresCancelled());
+            });
     }
 }
 
@@ -192,6 +247,7 @@ export function sendScore(matchType, match, hole, winner) {
         winner: winner
     };
     return (dispatch) => {
+        dispatch(requestScores());
         return fetch(url, {
             method: 'post',
             headers: {
@@ -205,6 +261,11 @@ export function sendScore(matchType, match, hole, winner) {
                 console.log('Complete:', json);
                 dispatch(receiveScores(json))
             })
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestScoresCancelled());
+            });
     }
 }
 
@@ -217,6 +278,7 @@ export function setPlayerName(id, name, surname) {
         surname: surname
     };
     return (dispatch) => {
+        dispatch(requestPlayers());
         return fetch(url, {
             method: 'post',
             headers: {
@@ -230,5 +292,10 @@ export function setPlayerName(id, name, surname) {
                 console.log('Complete:', json);
                 dispatch(receivePlayers(json))
             })
+            .catch(function (error) {
+                console.error("fetchScores error: ", error);
+                dispatch(issueSnackbarMessage("fetchScores: " + error));
+                dispatch(requestPlayersCancelled());
+            });
     }
 }

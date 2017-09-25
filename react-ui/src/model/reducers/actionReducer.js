@@ -1,15 +1,33 @@
 import {
+    ISSUE_SNACKBAR_MESSAGE,
     SET_PAGE,
     REQUEST_PLAYERS,
     RECEIVE_PLAYERS,
     RECEIVE_MATCH_LIST,
     RECEIVE_SINGLES_ORDER,
     REQUEST_SCORES,
-    RECEIVE_SCORES
+    RECEIVE_SCORES,
+    REQUEST_PLAYERS_CANCELLED,
+    REQUEST_SCORES_CANCELLED,
 } from '../actions/actions';
 
 export default function actionReducer(state = {}, action) {
     switch (action.type) {
+        case REQUEST_PLAYERS_CANCELLED:
+            return {
+                ...state,
+                isFetchingPlayers: false,
+            };
+        case REQUEST_SCORES_CANCELLED:
+            return {
+                ...state,
+                isFetchingScores: false,
+            };
+        case ISSUE_SNACKBAR_MESSAGE:
+            return {
+                ...state,
+                snackbarMessage: action.message
+            };
         case RECEIVE_MATCH_LIST:
             return {
                 ...state,

@@ -4,6 +4,8 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
+import ProgressContainer from '../containers/ProgressContainer';
+import SnackbarContainer from '../containers/SnackbarContainer';
 
 class Header extends Component {
     render() {
@@ -39,6 +41,7 @@ class Header extends Component {
             <div style={style.container}>
                 <Paper style={style.banner} zDepth={2} rounded={false}>
                     <img style={style.image} src={require('../../images/cydercup_logo.png')} alt="None"/>
+                    <ProgressContainer/>
                     <IconButton
                         onClick={this.props.refreshFunc}
                     >
@@ -54,6 +57,7 @@ class Header extends Component {
                         {this.props.items}
                     </IconMenu>
                 </Paper>
+                <SnackbarContainer />
             </div>
         )
     };
