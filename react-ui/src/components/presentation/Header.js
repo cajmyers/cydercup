@@ -14,7 +14,7 @@ class Header extends Component {
                 position: 'fixed',
                 width: '100%',
                 maxWidth: 960,
-                zIndex: 999,
+                zIndex: 1000,
                 top: 0,
                 left: 0,
                 textAlign: 'right'
